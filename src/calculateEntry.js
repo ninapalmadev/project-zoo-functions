@@ -19,7 +19,7 @@ const calculateEntry = (entrants) => {
   if (!entrants || entrants.length === 0) return 0;
   const count = countEntrants(entrants);
   const result = (count.adult * adult) + (count.child * child) + (count.senior * senior);
-  return result.toFixed([2]);
+  return result;
 };
 
 module.exports = { calculateEntry, countEntrants };
