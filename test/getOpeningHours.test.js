@@ -1,5 +1,8 @@
 const getOpeningHours = require('../src/getOpeningHours');
 
+const zooOpen = 'The zoo is open';
+const zooClosed = 'The zoo is closed';
+
 describe('Testes da função getOpeningHours', () => {
   it('Testa se retorna um objeto quando não é passado nenhum argumento na função getOpeningHours()', () => {
     expect(getOpeningHours()).toEqual({
@@ -13,12 +16,25 @@ describe('Testes da função getOpeningHours', () => {
     });
   });
   it('Verifica que se ao passar os argumentos "Monday" e "09:00-AM" retona a string "The zoo is closed"', () => {
-    expect(getOpeningHours('Monday', '09:00-AM')).toEqual('The zoo is closed');
-    expect(getOpeningHours('Monday', '09:00-AM')).not.toEqual('The zoo is open');
+    expect(getOpeningHours('Monday', '09:00-AM')).toEqual(zooClosed);
+    expect(getOpeningHours('Monday', '09:00-AM')).not.toEqual(zooOpen);
   });
   it('Verifica que se ao passar os argumentos "Tuesday" e "09:00-AM" retona a string "The zoo is open"', () => {
-    expect(getOpeningHours('Tuesday', '09:00-AM')).toEqual('The zoo is open');
-    expect(getOpeningHours('Tuesday', '09:00-AM')).not.toEqual('The zoo is closed');
+    expect(getOpeningHours('Tuesday', '09:00-AM')).toEqual(zooOpen);
+    expect(getOpeningHours('Tuesday', '09:00-AM')).not.toEqual(zooClosed);
+  });
+  it('Verifica que se ao passar os argumentos "Wednesday" e "09:00-PM" retona a string "The zoo is closed"', () => {
+    expect(getOpeningHours('Wednesday', '09:00-PM')).toEqual(zooClosed);
+    expect(getOpeningHours('Wednesday', '09:00-PM')).not.toEqual(zooOpen);
+  });
+  it('Verifica se ao passar os argumentos "Thu" e "09:00-AM" lança o erro "The day must be valid. Example: Monday" ', () => {
+    expect(() => getOpeningHours('Thu', '09:00-AM')).toThrow(new Error('The day must be valid. Example: Monday'));
+  });
+  it('Verifica se ao passar os argumentos "Friday" e "09:00-ZM" lança o erro "The abbreviation must be "AM" or "PM"" ', () => {
+    expect(() => getOpeningHours('Friday', '09:00-ZM')).toThrow(new Error('The abbreviation must be \'AM\' or \'PM\''));
+  });
+  it('Verifica se ao passar os argumentos "Saturday" e "C9:00-AM" lança o erro "The hour should represent a number" ', () => {
+    expect(() => getOpeningHours('Saturday', 'C9:00-AM')).toThrow(new Error('The hour should represent a number'));
   });
   // it(, () => {
   //   expect().;
